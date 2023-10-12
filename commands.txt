@@ -1,0 +1,5 @@
+C:\myenv\Scripts\activate
+
+set FLASK_APP=__init__.py
+
+flask run

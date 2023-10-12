@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flask Audio App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        body {
+            text-align: center;
+            margin: 0; /* Remove default body margin */
+            padding: 0; /* Remove default body padding */
+        }
+
+        .heading {
+            text-align: center;
+        }
+
+        #audio-player {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px 0; /* Adjust margin for top and bottom */
+        }
+
+        button {
+            margin: 10px;
+        }
+
+        #waveform-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #waveform {
+            width: 100%;
+            height: 300px;
+        }
+
+        p {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+<h1 class="heading">Flask Audio App</h1>
+<div id="audio-player">
+    <button id="playPause" class="btn btn-success btn-lg">Play/Pause</button>
+    <button id="switch" class="btn btn-primary btn-lg">Switch</button>
+    <button id="stop" class="btn btn-danger btn-lg">Stop</button>
+    <button id="alignButton" class="btn btn-info btn-lg">Match</button>
+</div>
+<div id="waveform-container">
+    <p>
+        <label>
+            <input type="checkbox" checked="${loop}" /> Loop region
+        </label>
+        <label style="margin-left: 2em">
+            Zoom: <input type="range" min="10" max="1000" value="10" />
+        </label>
+    </p>
+</div>
+<script type="module">
+      import WaveSurfer from 'https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.esm.js'
+      import RegionsPlugin from 'https://unpkg.com/wavesurfer.js@7/dist/plugins/regions.esm.js'
+
+      // Create your own media element
+      const audio = new Audio()
+      audio.controls = true
+      audio.src = 'music/Kissinetude.wav'
+
+      const audio2 = new Audio()
+      audio2.controls = true
+      audio2.src = 'music/Seg.wav'
+
+      // Create a WaveSurfer instance and pass the media element
+      const ws = WaveSurfer.create({
+        container: document.body,
+        waveColor: 'blue',
+        media: audio
+      })
+
+      // Optionally, add the audio to the page to see the controls
+      document.body.appendChild(audio)
+
+      const ws2 = WaveSurfer.create({
+        container: document.body,
+        waveColor: 'green',
+        media: audio2
+      })
+      document.body.appendChild(audio2)
+
+      document.getElementById('playPause').addEventListener('click', function() {
+        ws.setMuted(false);
+        ws2.setMuted(true);
+        ws.playPause();
+        ws2.playPause();
+      });
+
+      document.getElementById('switch').addEventListener('click', function() {
+        ws.setMuted(!ws.getMuted())
+        ws2.setMuted(!ws2.getMuted())
+      });
+
+      document.getElementById('stop').addEventListener('click', function() {
+        ws.stop();
+        ws2.stop();
+        ws.setMuted(false);
+        ws2.setMuted(false);
+      });
+ 
+      // Select the button by its ID
+      const alignButton = document.getElementById('alignButton');
+
+      let path; // Not used in this demo
+      let start_time;
+      let end_time;
+
+      // Initialize the Regions plugin
+      const wsRegions = ws.registerPlugin(RegionsPlugin.create())
+
+      // Give regions a random color when they are created
+      const random = (min, max) => Math.random() * (max - min) + min
+      const randomColor = () => `rgba(${random(0, 255)}, ${random(0, 255)}, ${random(0, 255)}, 0.5)`
+
+      // Create some regions at specific time ranges
+      ws.on('decode', () => {
+        
+      })
+
+      wsRegions.on('region-updated', (region) => {
+        console.log('Updated region', region)
+      })
+
+      // Loop a region on click
+      let loop = true
+      // Toggle looping with a checkbox
+      document.querySelector('input[type="checkbox"]').onclick = (e) => {
+        loop = e.target.checked
+      }
+
+      {
+        let activeRegion = null
+        wsRegions.on('region-in', (region) => {
+          activeRegion = region
+        })
+        wsRegions.on('region-out', (region) => {
+          if (activeRegion === region) {
+            if (loop) {
+              region.play()
+            } else {
+              activeRegion = null
+            }
+          }
+        })
+        wsRegions.on('region-clicked', (region, e) => {
+          e.stopPropagation() // prevent triggering a click on the waveform
+          activeRegion = region
+          region.play()
+          region.setOptions({ color: randomColor() })
+        })
+        // Reset the active region when the user clicks anywhere in the waveform
+        ws.on('interaction', () => {
+          activeRegion = null
+        })
+      }
+
+      // Update the zoom level on slider change
+      ws.once('decode', () => {
+        document.querySelector('input[type="range"]').oninput = (e) => {
+          const minPxPerSec = Number(e.target.value)
+          ws.zoom(minPxPerSec)
+        }
+      })
+
+      alignButton.addEventListener('click', function () {
+        // Clear all existing regions
+        wsRegions.clearRegions();
+
+        // Extract the audio file paths from your audio elements
+        const audioPath1 = audio.src;
+        const audioPath2 = audio2.src;
+
+        // Create a data object to send to the backend
+        const data = {
+          audioPath1: audioPath1,
+          audioPath2: audioPath2,
+        };
+
+        // Send a POST request to the Flask endpoint
+        fetch('/align', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        })
+          .then(response => response.json())
+          .then(data => {
+            // Wait for the asynchronous fetch operation to complete
+            start_time = parseFloat(data.start_time);
+            end_time = parseFloat(data.end_time);
+
+            console.log('start_time:', start_time);
+            console.log('end_time:', end_time);
+            console.log('Alignment Path:', path);
+
+            // Create a region using the Regions Plugin
+            wsRegions.addRegion({
+              start: start_time,
+              end: end_time,
+              color: randomColor(),
+              drag: true,
+              resize: true,
+              attributes: {
+              style: 'opacity: 0.5;', // Set the opacity level (0.5 is 50% transparent)
+              }
+            });
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+      });
+    </script>
+    </div>
+  </div>
+  </body>
+</html>
+
+<!-- https://wavesurfer.xyz/ -->
+<!-- https://wavesurfer.xyz/docs/classes/wavesurfer.default -->
+<!-- //https://bytexplain.com/how-to-make-an-audio-player-using-howler-js/ -->
