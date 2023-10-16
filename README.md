@@ -17,7 +17,7 @@ target match and the practice segment.
 To set up a virtual enviroment, install dependencies and run the Flask app:
 
 1. Clone the repository: `git clone https://github.com/ferm96/flask_audio_app.git`,
-2. Cd in to the cloned repo: `cd flask_audio_app`
+2. Change directory to the cloned repository: `cd flask_audio_app`
 3. Create a virtual environment and activate it:
 Example on Windows:
 Create: `python -m venv venv`
