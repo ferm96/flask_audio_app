@@ -16,7 +16,7 @@ target match and the practice segment.
 
 To set up a virtual enviroment, install dependencies and run the Flask app:
 
-1. Clone the repository: `git clone https://github.com/ferm96/flaskaudioapp.git`
+1. Clone the repository: `git clone https://github.com/ferm96/flask_audio_app.git`
 2. Create a virtual environment: `python -m venv venv` and activate it.
 On Windows:
 Create: `python -m venv venv`
@@ -39,7 +39,7 @@ On macOS: `export FLASK_APP=init.py`
 
 ## Credits
 
-- Developed by Oliwer Ferm and Mikael Kvist.
+- Developed by Oliwer Ferm (oliwerf@kth.se) and Mikael Kvist (github acc, mail).
 
 ## License
 
