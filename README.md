@@ -16,18 +16,19 @@ target match and the practice segment.
 
 To set up a virtual enviroment, install dependencies and run the Flask app:
 
-1. Clone the repository: `git clone https://github.com/ferm96/flask_audio_app.git`
-2. Create a virtual environment: `python -m venv venv` and activate it.
-On Windows:
+1. Clone the repository: `git clone https://github.com/ferm96/flask_audio_app.git`,
+2. Cd in to the cloned repo: `cd flask_audio_app`
+3. Create a virtual environment and activate it:
+Example on Windows:
 Create: `python -m venv venv`
 Activate: `.\venv\Scripts\activate`
-On macOS:
+Example on macOS:
 Create: `python3 -m venv venv`
 Activate: `source venv/bin/activate`
 4. Install dependencies: `pip install -r requirements.txt`
 5. Set the Flask app variable:
-On Windows: `set FLASK_APP=init.py`
-On macOS: `export FLASK_APP=init.py`
+On Windows: `set FLASK_APP=__init__.py`
+On macOS: `export FLASK_APP=__init__.py`
 6. Start the app: `flask run`
 7. Access the app at `[http://127.0.0.1:5000](http://localhost:500)`
 
