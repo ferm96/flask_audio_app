@@ -8,7 +8,7 @@ their practice sessions against a target. The app offer audio matching functiona
 to locate a practice segment within a reference recording and 
 provides a visualization of the matched region. The app lets the user playback and loop
 over the match, and includes a switching functionality to easily switch back and fourth between the
-target match and the practice segment. This is a demo project connected to a master degree project.
+target match and the practice segment. This is a demo project connected to a master thesis.
 
 <img src="demo.PNG" alt="Demo" width="600" height="400">
 
