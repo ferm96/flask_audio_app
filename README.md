@@ -12,7 +12,7 @@ provides a visualization of the matched region.
 
 ## Installation
 
-To set up the Flask Audio App:
+To set up a virtual enviroment, install dependencies and run the Flask app:
 
 1. Clone the repository: `git clone https://github.com/ferm96/flaskaudioapp.git`
 2. Create a virtual environment: E.g. `python -m venv venv` and activate it.
@@ -20,7 +20,7 @@ To set up the Flask Audio App:
 4. Start the app: `flask run`
 5. Access the app at `http://127.0.0.1:5000`
 
-## Usage
+## Functionalities
 
 1. Playback Controls: Play, pause, stop, and switch between audio recordings. Both are running when pressing play, the switch buttom toggles mute.
 2. Matching Functionality: Click "Match" to compute and visualize the matching region between the recordings.
@@ -29,8 +29,7 @@ To set up the Flask Audio App:
 ## Credits
 
 - Developed by Oliwer Ferm and Mikael Kvist.
-- Built using Flask, Librosa, and WaveSurfer.js.
 
-% ## License
+## License
 
-% This project is not currently licensed.
+Copyright 2023 KTH Royal Institute of Technology
