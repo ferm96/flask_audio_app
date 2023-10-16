@@ -39,7 +39,7 @@ On macOS: `export FLASK_APP=init.py`
 
 ## Credits
 
-- Developed by Oliwer Ferm (oliwerferm@gmail.com) and [Mikael Kvist](https://github.com/mikaelkvist/).
+- Developed by [Oliwer Ferm](https://github.com/ferm96/) and [Mikael Kvist](https://github.com/mikaelkvist/).
 
 ## License
 
