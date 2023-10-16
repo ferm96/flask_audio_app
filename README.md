@@ -15,10 +15,19 @@ provides a visualization of the matched region.
 To set up a virtual enviroment, install dependencies and run the Flask app:
 
 1. Clone the repository: `git clone https://github.com/ferm96/flaskaudioapp.git`
-2. Create a virtual environment: E.g. `python -m venv venv` and activate it.
-3. Install dependencies: `pip install -r requirements.txt`
-4. Start the app: `flask run`
-5. Access the app at `http://127.0.0.1:5000`
+2. Create a virtual environment: `python -m venv venv` and activate it.
+On Windows:
+Create: `python -m venv venv`
+Activate: `.\venv\Scripts\activate`
+On macOS:
+Create: `python3 -m venv venv`
+Activate: `source venv/bin/activate`
+4. Install dependencies: `pip install -r requirements.txt`
+5. Set the Flask app variable:
+On Windows: `set FLASK_APP=init.py`
+On macOS: `export FLASK_APP=init.py`
+6. Start the app: `flask run`
+7. Access the app at `[http://127.0.0.1:5000](http://localhost:500)`
 
 ## Functionalities
 
