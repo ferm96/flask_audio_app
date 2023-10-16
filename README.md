@@ -36,7 +36,7 @@ On macOS: `export FLASK_APP=__init__.py`
 
 1. Playback Controls: Play, pause, stop, and switch between audio recordings. Both are running when pressing play, the switch buttom toggles mute.
 2. Matching Functionality: Click "Match" to compute and visualize the matching region between the recordings.
-3. Zoom, Loop and adjust matched region: Zoom in, loop selected region, and manually adjust matching region if needed.
+3. Zoom on target recording, loop option (checkbox) on region, and manually adjust matching region if needed.
 
 ## Credits
 
