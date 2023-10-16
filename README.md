@@ -8,7 +8,7 @@ their practice sessions against a target. The app offer audio matching functiona
 to locate a practice segment within a reference recording and 
 provides a visualization of the matched region.
 
-![demo](assets/images/audioapp.png)
+![demo](demo.png)
 
 ## Installation
 
